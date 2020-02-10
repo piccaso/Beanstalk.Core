@@ -7,7 +7,7 @@ namespace Beanstalk.Core {
 
     public static class NetworkStreamExtension {
 
-        public static string ReadResponse(this NetworkStream stream) {
+        public static string ReadResponse(this NetworkStream stream, Encoding encoding) {
             using (var ms = new MemoryStream()) {
                 var last = -1;
                 while (true) {
@@ -17,7 +17,7 @@ namespace Beanstalk.Core {
                     if (last == 13 && ret == 10) break;
                     last = ret;
                 }
-                return Encoding.Default.GetString(ms.ToArray()).Trim();
+                return encoding.GetString(ms.ToArray()).Trim();
             }
         }
 
